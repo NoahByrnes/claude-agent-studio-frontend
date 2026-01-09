@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../lib/api';
-import type { CreateAgentRequest } from '../../shared-types/index.js';
+import type { CreateAgentRequest } from '../shared-types/index.js';
 
 export default function AgentNew() {
   const navigate = useNavigate();
