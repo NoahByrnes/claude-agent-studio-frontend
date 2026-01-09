@@ -10,34 +10,116 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">Manage your autonomous agents</p>
+          <div
+            className="text-xs mb-2"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              color: '#666666',
+              letterSpacing: '0.1em',
+            }}
+          >
+            OVERVIEW
+          </div>
+          <h1
+            className="text-3xl font-bold mb-2"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              color: '#FFFFFF',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            DEPLOYMENT <span style={{ color: '#FF6B35' }}>DASHBOARD</span>
+          </h1>
+          <p
+            className="text-sm"
+            style={{
+              fontFamily: "'Archivo', sans-serif",
+              color: '#999999',
+            }}
+          >
+            Manage autonomous agent infrastructure
+          </p>
         </div>
         <Link
           to="/agents/new"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-3 font-medium transition-all duration-150"
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            backgroundColor: '#FF6B35',
+            color: '#0A0A0A',
+            letterSpacing: '0.05em',
+            fontSize: '0.8125rem',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#FF8555';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#FF6B35';
+          }}
         >
           <Plus className="w-4 h-4" />
-          New Agent
+          NEW AGENT
         </Link>
       </div>
 
       {isLoading ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">Loading agents...</p>
+        <div
+          className="text-center py-16"
+          style={{
+            border: '1px solid #333333',
+            backgroundColor: '#1A1A1A',
+          }}
+        >
+          <p
+            className="text-sm"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              color: '#666666',
+              letterSpacing: '0.05em',
+            }}
+          >
+            LOADING AGENTS...
+          </p>
         </div>
       ) : data?.agents.length === 0 ? (
-        <div className="text-center py-12 border border-dashed rounded-lg">
-          <p className="text-muted-foreground mb-4">No agents yet</p>
+        <div
+          className="text-center py-16"
+          style={{
+            border: '1px dashed #333333',
+            backgroundColor: '#1A1A1A',
+          }}
+        >
+          <p
+            className="text-sm mb-6"
+            style={{
+              fontFamily: "'Archivo', sans-serif",
+              color: '#999999',
+            }}
+          >
+            No agents deployed
+          </p>
           <Link
             to="/agents/new"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-3 font-medium transition-all duration-150"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              backgroundColor: '#FF6B35',
+              color: '#0A0A0A',
+              letterSpacing: '0.05em',
+              fontSize: '0.8125rem',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#FF8555';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#FF6B35';
+            }}
           >
             <Plus className="w-4 h-4" />
-            Create your first agent
+            DEPLOY FIRST AGENT
           </Link>
         </div>
       ) : (
@@ -46,26 +128,73 @@ export default function Dashboard() {
             <Link
               key={agent.id}
               to={`/agents/${agent.id}`}
-              className="block p-6 border rounded-lg hover:border-primary transition-colors"
+              className="block p-6 transition-all duration-150"
+              style={{
+                border: '1px solid #333333',
+                backgroundColor: '#1A1A1A',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#FF6B35';
+                e.currentTarget.style.backgroundColor = '#1F1F1F';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#333333';
+                e.currentTarget.style.backgroundColor = '#1A1A1A';
+              }}
             >
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold">{agent.name}</h3>
-                <span
-                  className={`text-xs px-2 py-1 rounded-full ${
-                    agent.status === 'running'
-                      ? 'bg-green-100 text-green-800'
-                      : agent.status === 'stopped'
-                      ? 'bg-gray-100 text-gray-800'
-                      : agent.status === 'error'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-blue-100 text-blue-800'
-                  }`}
+              <div className="flex items-start justify-between mb-3">
+                <h3
+                  className="font-semibold text-base"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    color: '#FFFFFF',
+                    letterSpacing: '-0.01em',
+                  }}
                 >
-                  {agent.status}
+                  {agent.name}
+                </h3>
+                <span
+                  className="text-xs px-2 py-1"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    letterSpacing: '0.05em',
+                    border: '1px solid',
+                    ...(agent.status === 'running'
+                      ? {
+                          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                          borderColor: 'rgba(34, 197, 94, 0.3)',
+                          color: '#22C55E',
+                        }
+                      : agent.status === 'stopped'
+                      ? {
+                          backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                          borderColor: 'rgba(156, 163, 175, 0.3)',
+                          color: '#9CA3AF',
+                        }
+                      : agent.status === 'error'
+                      ? {
+                          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                          borderColor: 'rgba(239, 68, 68, 0.3)',
+                          color: '#EF4444',
+                        }
+                      : {
+                          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                          borderColor: 'rgba(59, 130, 246, 0.3)',
+                          color: '#3B82F6',
+                        }),
+                  }}
+                >
+                  {agent.status.toUpperCase()}
                 </span>
               </div>
               {agent.config.description && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
+                <p
+                  className="text-sm line-clamp-2"
+                  style={{
+                    fontFamily: "'Archivo', sans-serif",
+                    color: '#999999',
+                  }}
+                >
                   {agent.config.description}
                 </p>
               )}

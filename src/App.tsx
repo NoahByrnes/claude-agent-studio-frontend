@@ -19,25 +19,86 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: '#0A0A0A',
+        backgroundImage: user
+          ? `
+            linear-gradient(rgba(255, 107, 53, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 107, 53, 0.02) 1px, transparent 1px)
+          `
+          : 'none',
+        backgroundSize: '40px 40px',
+        backgroundPosition: 'center center',
+      }}
+    >
       {user && (
-        <header className="border-b">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-primary">Claude Agent Studio</h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">{user.email}</span>
+        <header
+          style={{
+            borderBottom: '1px solid #333333',
+            backgroundColor: '#0A0A0A',
+          }}
+        >
+          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div>
+              <div
+                className="text-xs mb-1"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#666666',
+                  letterSpacing: '0.1em',
+                }}
+              >
+                SYS://STUDIO
+              </div>
+              <h1
+                className="text-xl font-bold"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#FFFFFF',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                CLAUDE AGENT <span style={{ color: '#FF6B35' }}>STUDIO</span>
+              </h1>
+            </div>
+            <div className="flex items-center gap-6">
+              <span
+                className="text-xs"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#999999',
+                }}
+              >
+                {user.email}
+              </span>
               <button
                 onClick={handleSignOut}
-                className="inline-flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-secondary transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium transition-all duration-150"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  border: '1px solid #333333',
+                  color: '#CCCCCC',
+                  letterSpacing: '0.05em',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#FF6B35';
+                  e.currentTarget.style.color = '#FF6B35';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#333333';
+                  e.currentTarget.style.color = '#CCCCCC';
+                }}
               >
                 <LogOut className="w-4 h-4" />
-                Sign out
+                SIGN OUT
               </button>
             </div>
           </div>
         </header>
       )}
-      <main className={user ? 'container mx-auto px-4 py-8' : ''}>
+      <main className={user ? 'container mx-auto px-6 py-8' : ''}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
