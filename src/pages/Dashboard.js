@@ -64,6 +64,22 @@ export default function Dashboard() {
     const isOnline = status?.status === 'online';
     const conductor = status?.conductor;
     const workers = status?.workers || [];
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'running':
+                return '#22C55E'; // Green
+            case 'initializing':
+                return '#F59E0B'; // Amber/Yellow
+            case 'complete':
+                return '#3B82F6'; // Blue
+            case 'error':
+                return '#EF4444'; // Red
+            case 'blocked':
+                return '#FF6B35'; // Orange
+            default:
+                return '#666666'; // Gray
+        }
+    };
     return (_jsxs("div", { className: "space-y-6", children: [_jsxs("div", { className: "relative", children: [_jsxs("div", { className: "flex items-start justify-between", children: [_jsxs("div", { children: [_jsxs("div", { className: "text-[10px] mb-2 tracking-[0.2em] flex items-center gap-3", style: {
                                             fontFamily: "'IBM Plex Mono', monospace",
                                             color: '#666666',
@@ -178,10 +194,8 @@ export default function Dashboard() {
                                         backgroundColor: '#0F0F0F',
                                         animationDelay: `${index * 100}ms`,
                                     }, children: [_jsx("div", { className: "absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-300 group-hover:w-[4px]", style: {
-                                                backgroundColor: worker.status === 'running' ? '#22C55E' : '#FF6B35',
-                                                boxShadow: worker.status === 'running'
-                                                    ? '0 0 10px rgba(34, 197, 94, 0.5)'
-                                                    : '0 0 10px rgba(255, 107, 53, 0.5)',
+                                                backgroundColor: getStatusColor(worker.status),
+                                                boxShadow: `0 0 10px ${getStatusColor(worker.status)}80`,
                                             } }), _jsxs("div", { className: "p-5 pl-6", children: [_jsxs("div", { className: "flex items-start justify-between mb-4", children: [_jsxs("div", { className: "flex-1", children: [_jsx("div", { className: "text-[10px] tracking-[0.15em] mb-1", style: {
                                                                         fontFamily: "'IBM Plex Mono', monospace",
                                                                         color: '#666666',
@@ -190,11 +204,9 @@ export default function Dashboard() {
                                                                         color: '#FFFFFF',
                                                                     }, title: worker.id, children: truncateId(worker.id) })] }), _jsx("div", { className: "px-3 py-1 text-[10px] tracking-[0.1em] font-bold", style: {
                                                                 fontFamily: "'IBM Plex Mono', monospace",
-                                                                border: `1px solid ${worker.status === 'running' ? '#22C55E' : '#FF6B35'}`,
-                                                                backgroundColor: worker.status === 'running'
-                                                                    ? 'rgba(34, 197, 94, 0.1)'
-                                                                    : 'rgba(255, 107, 53, 0.1)',
-                                                                color: worker.status === 'running' ? '#22C55E' : '#FF6B35',
+                                                                border: `1px solid ${getStatusColor(worker.status)}`,
+                                                                backgroundColor: `${getStatusColor(worker.status)}1A`,
+                                                                color: getStatusColor(worker.status),
                                                             }, children: worker.status.toUpperCase() })] }), worker.task && (_jsxs("div", { className: "mb-3", children: [_jsx("div", { className: "text-[10px] tracking-[0.15em] mb-1", style: {
                                                                 fontFamily: "'IBM Plex Mono', monospace",
                                                                 color: '#666666',

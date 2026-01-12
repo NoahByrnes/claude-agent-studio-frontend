@@ -69,6 +69,23 @@ export default function Dashboard() {
   const conductor = status?.conductor;
   const workers = status?.workers || [];
 
+  const getStatusColor = (status: string): string => {
+    switch (status) {
+      case 'running':
+        return '#22C55E'; // Green
+      case 'initializing':
+        return '#F59E0B'; // Amber/Yellow
+      case 'complete':
+        return '#3B82F6'; // Blue
+      case 'error':
+        return '#EF4444'; // Red
+      case 'blocked':
+        return '#FF6B35'; // Orange
+      default:
+        return '#666666'; // Gray
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header with live status */}
@@ -470,12 +487,8 @@ export default function Dashboard() {
                     <div
                       className="absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-300 group-hover:w-[4px]"
                       style={{
-                        backgroundColor:
-                          worker.status === 'running' ? '#22C55E' : '#FF6B35',
-                        boxShadow:
-                          worker.status === 'running'
-                            ? '0 0 10px rgba(34, 197, 94, 0.5)'
-                            : '0 0 10px rgba(255, 107, 53, 0.5)',
+                        backgroundColor: getStatusColor(worker.status),
+                        boxShadow: `0 0 10px ${getStatusColor(worker.status)}80`,
                       }}
                     />
 
@@ -506,14 +519,9 @@ export default function Dashboard() {
                           className="px-3 py-1 text-[10px] tracking-[0.1em] font-bold"
                           style={{
                             fontFamily: "'IBM Plex Mono', monospace",
-                            border: `1px solid ${
-                              worker.status === 'running' ? '#22C55E' : '#FF6B35'
-                            }`,
-                            backgroundColor:
-                              worker.status === 'running'
-                                ? 'rgba(34, 197, 94, 0.1)'
-                                : 'rgba(255, 107, 53, 0.1)',
-                            color: worker.status === 'running' ? '#22C55E' : '#FF6B35',
+                            border: `1px solid ${getStatusColor(worker.status)}`,
+                            backgroundColor: `${getStatusColor(worker.status)}1A`,
+                            color: getStatusColor(worker.status),
                           }}
                         >
                           {worker.status.toUpperCase()}
