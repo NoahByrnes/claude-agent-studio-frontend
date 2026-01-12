@@ -146,6 +146,30 @@ class ApiClient {
   async getConnectorStatus(): Promise<ConnectorStatus> {
     return this.fetch<ConnectorStatus>('/monitoring/connectors');
   }
+
+  async getConnectorConfigs(): Promise<any> {
+    return this.fetch<any>('/config/connectors');
+  }
+
+  async saveEmailConfig(apiKey: string, fromEmail: string): Promise<{ success: boolean; message: string }> {
+    return this.fetch<{ success: boolean; message: string }>('/config/connectors/email', {
+      method: 'POST',
+      body: JSON.stringify({ apiKey, fromEmail }),
+    });
+  }
+
+  async saveSmsConfig(accountSid: string, authToken: string, phoneNumber: string): Promise<{ success: boolean; message: string }> {
+    return this.fetch<{ success: boolean; message: string }>('/config/connectors/sms', {
+      method: 'POST',
+      body: JSON.stringify({ accountSid, authToken, phoneNumber }),
+    });
+  }
+
+  async deleteConnectorConfig(type: 'email' | 'sms'): Promise<{ success: boolean; message: string }> {
+    return this.fetch<{ success: boolean; message: string }>(`/config/connectors/${type}`, {
+      method: 'DELETE',
+    });
+  }
 }
 
 export const api = new ApiClient();

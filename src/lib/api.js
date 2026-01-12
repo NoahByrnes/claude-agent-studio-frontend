@@ -103,5 +103,25 @@ class ApiClient {
     async getConnectorStatus() {
         return this.fetch('/monitoring/connectors');
     }
+    async getConnectorConfigs() {
+        return this.fetch('/config/connectors');
+    }
+    async saveEmailConfig(apiKey, fromEmail) {
+        return this.fetch('/config/connectors/email', {
+            method: 'POST',
+            body: JSON.stringify({ apiKey, fromEmail }),
+        });
+    }
+    async saveSmsConfig(accountSid, authToken, phoneNumber) {
+        return this.fetch('/config/connectors/sms', {
+            method: 'POST',
+            body: JSON.stringify({ accountSid, authToken, phoneNumber }),
+        });
+    }
+    async deleteConnectorConfig(type) {
+        return this.fetch(`/config/connectors/${type}`, {
+            method: 'DELETE',
+        });
+    }
 }
 export const api = new ApiClient();
