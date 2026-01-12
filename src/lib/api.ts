@@ -5,6 +5,10 @@ import type {
   AgentListResponse,
   LogsResponse,
   MetricsResponse,
+  MonitoringStatusResponse,
+  MonitoringMetricsResponse,
+  WorkerStatus,
+  SendMessageRequest,
 } from '../shared-types/index.js';
 import { supabase } from './supabase';
 
@@ -104,6 +108,37 @@ class ApiClient {
   connectToLogs(agentId: string): WebSocket {
     const wsUrl = `${API_BASE.replace('http', 'ws')}/agents/${agentId}/logs/stream`;
     return new WebSocket(wsUrl);
+  }
+
+  // Conductor/Worker Monitoring
+  async getMonitoringStatus(): Promise<MonitoringStatusResponse> {
+    return this.fetch<MonitoringStatusResponse>('/monitoring/status');
+  }
+
+  async getMonitoringMetrics(): Promise<MonitoringMetricsResponse> {
+    return this.fetch<MonitoringMetricsResponse>('/monitoring/metrics');
+  }
+
+  async getActiveWorkers(): Promise<{ workers: WorkerStatus[] }> {
+    return this.fetch<{ workers: WorkerStatus[] }>('/monitoring/workers');
+  }
+
+  async sendTestMessage(message: SendMessageRequest): Promise<{ success: boolean; conductorResponse: string }> {
+    return this.fetch<{ success: boolean; conductorResponse: string }>('/monitoring/test', {
+      method: 'POST',
+      body: JSON.stringify(message),
+    });
+  }
+
+  async getMonitoringHealth(): Promise<{ status: string; timestamp: string }> {
+    return this.fetch<{ status: string; timestamp: string }>('/monitoring/health');
+  }
+
+  async sendConductorMessage(content: string, source: 'USER' | 'EMAIL' | 'SMS' = 'USER'): Promise<{ success: boolean; conductorResponse: string }> {
+    return this.fetch<{ success: boolean; conductorResponse: string }>('/webhooks/conductor/message', {
+      method: 'POST',
+      body: JSON.stringify({ source, content }),
+    });
   }
 }
 

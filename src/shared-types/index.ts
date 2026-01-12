@@ -138,3 +138,46 @@ export const ErrorResponse = z.object({
   details: z.record(z.unknown()).optional(),
 });
 export type ErrorResponse = z.infer<typeof ErrorResponse>;
+
+// Conductor/Worker Monitoring Types
+export const ConductorStatus = z.object({
+  sessionId: z.string().optional(),
+  sandboxId: z.string().optional(),
+  uptime: z.number().optional(),
+  lastActivity: z.string().optional(),
+  activeWorkerCount: z.number().optional(),
+});
+export type ConductorStatus = z.infer<typeof ConductorStatus>;
+
+export const WorkerStatus = z.object({
+  id: z.string(),
+  sandboxId: z.string(),
+  task: z.string().optional(),
+  status: z.string(),
+  createdAt: z.string(),
+});
+export type WorkerStatus = z.infer<typeof WorkerStatus>;
+
+export const MonitoringStatusResponse = z.object({
+  status: z.enum(['online', 'offline']),
+  conductor: ConductorStatus.nullable(),
+  workers: z.array(WorkerStatus),
+  timestamp: z.string(),
+});
+export type MonitoringStatusResponse = z.infer<typeof MonitoringStatusResponse>;
+
+export const MonitoringMetricsResponse = z.object({
+  status: z.string(),
+  uptime: z.number(),
+  totalMessages: z.number(),
+  totalWorkers: z.number(),
+  activeWorkers: z.number(),
+  timestamp: z.string(),
+});
+export type MonitoringMetricsResponse = z.infer<typeof MonitoringMetricsResponse>;
+
+export const SendMessageRequest = z.object({
+  source: z.enum(['USER', 'EMAIL', 'SMS']),
+  content: z.string(),
+});
+export type SendMessageRequest = z.infer<typeof SendMessageRequest>;
