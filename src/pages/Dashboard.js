@@ -38,12 +38,14 @@ export default function Dashboard() {
     const [message, setMessage] = useState('');
     const [lastResponse, setLastResponse] = useState('');
     const queryClient = useQueryClient();
-    // Auto-refresh every 5 seconds
+    // Auto-refresh every 2 seconds
     const { data: status, isLoading } = useQuery({
         queryKey: ['monitoring-status'],
         queryFn: () => api.getMonitoringStatus(),
-        refetchInterval: 5000,
+        refetchInterval: 2000,
         refetchIntervalInBackground: true,
+        refetchOnWindowFocus: true,
+        staleTime: 0,
     });
     const sendMessageMutation = useMutation({
         mutationFn: (content) => api.sendConductorMessage(content),
