@@ -5,4 +5,3 @@ import Dashboard from './Dashboard';
 export default function AgentList() {
     return _jsx(Dashboard, {});
 }
-//# sourceMappingURL=AgentList.js.map

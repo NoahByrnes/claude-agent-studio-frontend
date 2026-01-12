@@ -74,6 +74,34 @@ class ApiClient {
         const wsUrl = `${API_BASE.replace('http', 'ws')}/agents/${agentId}/logs/stream`;
         return new WebSocket(wsUrl);
     }
+    // Conductor/Worker Monitoring
+    async getMonitoringStatus() {
+        return this.fetch('/monitoring/status');
+    }
+    async getMonitoringMetrics() {
+        return this.fetch('/monitoring/metrics');
+    }
+    async getActiveWorkers() {
+        return this.fetch('/monitoring/workers');
+    }
+    async sendTestMessage(message) {
+        return this.fetch('/monitoring/test', {
+            method: 'POST',
+            body: JSON.stringify(message),
+        });
+    }
+    async getMonitoringHealth() {
+        return this.fetch('/monitoring/health');
+    }
+    async sendConductorMessage(content, source = 'USER') {
+        return this.fetch('/webhooks/conductor/message', {
+            method: 'POST',
+            body: JSON.stringify({ source, content }),
+        });
+    }
+    // Connector Configuration
+    async getConnectorStatus() {
+        return this.fetch('/monitoring/connectors');
+    }
 }
 export const api = new ApiClient();
-//# sourceMappingURL=api.js.map

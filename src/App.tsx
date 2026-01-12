@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from './lib/auth-store';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -7,7 +7,8 @@ import Dashboard from './pages/Dashboard';
 import AgentList from './pages/AgentList';
 import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
-import { LogOut } from 'lucide-react';
+import Connectors from './pages/Connectors';
+import { LogOut, Plug } from 'lucide-react';
 
 function App() {
   const { user, signOut } = useAuthStore();
@@ -64,6 +65,27 @@ function App() {
               </h1>
             </div>
             <div className="flex items-center gap-6">
+              <Link
+                to="/connectors"
+                className="flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  border: '1px solid #333333',
+                  color: '#CCCCCC',
+                  letterSpacing: '0.05em',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#FF6B35';
+                  e.currentTarget.style.color = '#FF6B35';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#333333';
+                  e.currentTarget.style.color = '#CCCCCC';
+                }}
+              >
+                <Plug className="w-4 h-4" />
+                CONNECTORS
+              </Link>
               <span
                 className="text-xs"
                 style={{
@@ -131,6 +153,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AgentDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/connectors"
+            element={
+              <ProtectedRoute>
+                <Connectors />
               </ProtectedRoute>
             }
           />

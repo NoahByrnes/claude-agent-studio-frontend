@@ -14,4 +14,3 @@ const queryClient = new QueryClient({
     },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(_jsx(React.StrictMode, { children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(BrowserRouter, { children: _jsx(App, {}) }) }) }));
-//# sourceMappingURL=main.js.map

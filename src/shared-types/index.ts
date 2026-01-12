@@ -181,3 +181,16 @@ export const SendMessageRequest = z.object({
   content: z.string(),
 });
 export type SendMessageRequest = z.infer<typeof SendMessageRequest>;
+
+// Connector Configuration Types
+export const ConnectorStatus = z.object({
+  email: z.object({
+    configured: z.boolean(),
+    fromAddress: z.string().optional(),
+  }),
+  sms: z.object({
+    configured: z.boolean(),
+    phoneNumber: z.string().optional(),
+  }),
+});
+export type ConnectorStatus = z.infer<typeof ConnectorStatus>;

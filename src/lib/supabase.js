@@ -5,4 +5,3 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Supabase credentials not configured');
 }
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-//# sourceMappingURL=supabase.js.map

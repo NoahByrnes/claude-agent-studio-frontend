@@ -9,6 +9,7 @@ import type {
   MonitoringMetricsResponse,
   WorkerStatus,
   SendMessageRequest,
+  ConnectorStatus,
 } from '../shared-types/index.js';
 import { supabase } from './supabase';
 
@@ -139,6 +140,11 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify({ source, content }),
     });
+  }
+
+  // Connector Configuration
+  async getConnectorStatus(): Promise<ConnectorStatus> {
+    return this.fetch<ConnectorStatus>('/monitoring/connectors');
   }
 }
 

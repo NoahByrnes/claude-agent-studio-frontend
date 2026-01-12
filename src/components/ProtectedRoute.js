@@ -17,4 +17,3 @@ export default function ProtectedRoute({ children }) {
     }
     return _jsx(_Fragment, { children: children });
 }
-//# sourceMappingURL=ProtectedRoute.js.map
