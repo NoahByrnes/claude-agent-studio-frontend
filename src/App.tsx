@@ -9,6 +9,7 @@ import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
 import Connectors from './pages/Connectors';
 import CLIFeed from './pages/CLIFeed';
+import WorkerDetail from './pages/WorkerDetail';
 import { LogOut, Plug, Home, Terminal } from 'lucide-react';
 
 function App() {
@@ -219,6 +220,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <CLIFeed />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/worker/:workerId"
+            element={
+              <ProtectedRoute>
+                <WorkerDetail />
               </ProtectedRoute>
             }
           />

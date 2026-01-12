@@ -1,6 +1,7 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { Send, Zap, Activity, Terminal, Box, Clock } from 'lucide-react';
 // Utility functions
@@ -170,7 +171,7 @@ export default function Dashboard() {
                                         }, children: "NO ACTIVE WORKERS" }), _jsx("p", { className: "text-xs mt-2", style: {
                                             fontFamily: "'IBM Plex Mono', monospace",
                                             color: '#444444',
-                                        }, children: "Send a message to spawn workers" })] })) : (_jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: workers.map((worker, index) => (_jsxs("div", { className: "group relative overflow-hidden transition-all duration-300", style: {
+                                        }, children: "Send a message to spawn workers" })] })) : (_jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: workers.map((worker, index) => (_jsxs(Link, { to: `/worker/${worker.id}`, className: "group relative overflow-hidden transition-all duration-300 cursor-pointer hover:scale-[1.02]", style: {
                                         border: '1px solid #333333',
                                         backgroundColor: '#0F0F0F',
                                         animationDelay: `${index * 100}ms`,

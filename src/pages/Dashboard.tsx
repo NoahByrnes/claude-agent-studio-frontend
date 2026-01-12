@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { Send, Zap, Activity, Terminal, Box, Clock } from 'lucide-react';
 
@@ -453,9 +454,10 @@ export default function Dashboard() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {workers.map((worker, index) => (
-                  <div
+                  <Link
                     key={worker.id}
-                    className="group relative overflow-hidden transition-all duration-300"
+                    to={`/worker/${worker.id}`}
+                    className="group relative overflow-hidden transition-all duration-300 cursor-pointer hover:scale-[1.02]"
                     style={{
                       border: '1px solid #333333',
                       backgroundColor: '#0F0F0F',
@@ -567,7 +569,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}

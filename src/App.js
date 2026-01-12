@@ -10,6 +10,7 @@ import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
 import Connectors from './pages/Connectors';
 import CLIFeed from './pages/CLIFeed';
+import WorkerDetail from './pages/WorkerDetail';
 import { LogOut, Plug, Home, Terminal } from 'lucide-react';
 function App() {
     const { user, signOut } = useAuthStore();
@@ -88,6 +89,6 @@ function App() {
                                     }, onMouseLeave: (e) => {
                                         e.currentTarget.style.borderColor = '#333333';
                                         e.currentTarget.style.color = '#CCCCCC';
-                                    }, children: [_jsx(LogOut, { className: "w-4 h-4" }), "SIGN OUT"] })] })] }) })), _jsx("main", { className: user ? 'container mx-auto px-6 py-8' : '', children: _jsxs(Routes, { children: [_jsx(Route, { path: "/login", element: _jsx(Login, {}) }), _jsx(Route, { path: "/signup", element: _jsx(Signup, {}) }), _jsx(Route, { path: "/", element: _jsx(ProtectedRoute, { children: _jsx(Dashboard, {}) }) }), _jsx(Route, { path: "/agents", element: _jsx(ProtectedRoute, { children: _jsx(AgentList, {}) }) }), _jsx(Route, { path: "/agents/new", element: _jsx(ProtectedRoute, { children: _jsx(AgentNew, {}) }) }), _jsx(Route, { path: "/agents/:id", element: _jsx(ProtectedRoute, { children: _jsx(AgentDetail, {}) }) }), _jsx(Route, { path: "/connectors", element: _jsx(ProtectedRoute, { children: _jsx(Connectors, {}) }) }), _jsx(Route, { path: "/cli-feed", element: _jsx(ProtectedRoute, { children: _jsx(CLIFeed, {}) }) }), _jsx(Route, { path: "*", element: _jsx(Navigate, { to: "/", replace: true }) })] }) })] }));
+                                    }, children: [_jsx(LogOut, { className: "w-4 h-4" }), "SIGN OUT"] })] })] }) })), _jsx("main", { className: user ? 'container mx-auto px-6 py-8' : '', children: _jsxs(Routes, { children: [_jsx(Route, { path: "/login", element: _jsx(Login, {}) }), _jsx(Route, { path: "/signup", element: _jsx(Signup, {}) }), _jsx(Route, { path: "/", element: _jsx(ProtectedRoute, { children: _jsx(Dashboard, {}) }) }), _jsx(Route, { path: "/agents", element: _jsx(ProtectedRoute, { children: _jsx(AgentList, {}) }) }), _jsx(Route, { path: "/agents/new", element: _jsx(ProtectedRoute, { children: _jsx(AgentNew, {}) }) }), _jsx(Route, { path: "/agents/:id", element: _jsx(ProtectedRoute, { children: _jsx(AgentDetail, {}) }) }), _jsx(Route, { path: "/connectors", element: _jsx(ProtectedRoute, { children: _jsx(Connectors, {}) }) }), _jsx(Route, { path: "/cli-feed", element: _jsx(ProtectedRoute, { children: _jsx(CLIFeed, {}) }) }), _jsx(Route, { path: "/worker/:workerId", element: _jsx(ProtectedRoute, { children: _jsx(WorkerDetail, {}) }) }), _jsx(Route, { path: "*", element: _jsx(Navigate, { to: "/", replace: true }) })] }) })] }));
 }
 export default App;

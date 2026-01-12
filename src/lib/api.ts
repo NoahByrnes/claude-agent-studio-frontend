@@ -190,6 +190,27 @@ class ApiClient {
     const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/cli-feed/stream`;
     return new WebSocket(wsUrl);
   }
+
+  // Worker Details
+  async getWorkerDetails(workerId: string, limit?: number): Promise<{
+    workerId: string;
+    messages: Array<{
+      timestamp: string;
+      workerId: string;
+      sandboxId: string;
+      messageType: 'init' | 'user' | 'assistant' | 'tool_use' | 'tool_result' | 'result';
+      content: any;
+    }>;
+    count: number;
+    totalBuffered: number;
+  }> {
+    return this.fetch(`/monitoring/workers/${workerId}/details${limit ? `?limit=${limit}` : ''}`);
+  }
+
+  connectToWorkerStream(workerId: string): WebSocket {
+    const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/workers/${workerId}/stream`;
+    return new WebSocket(wsUrl);
+  }
 }
 
 export const api = new ApiClient();

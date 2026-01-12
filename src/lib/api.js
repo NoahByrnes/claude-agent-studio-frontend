@@ -131,5 +131,13 @@ class ApiClient {
         const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/cli-feed/stream`;
         return new WebSocket(wsUrl);
     }
+    // Worker Details
+    async getWorkerDetails(workerId, limit) {
+        return this.fetch(`/monitoring/workers/${workerId}/details${limit ? `?limit=${limit}` : ''}`);
+    }
+    connectToWorkerStream(workerId) {
+        const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/workers/${workerId}/stream`;
+        return new WebSocket(wsUrl);
+    }
 }
 export const api = new ApiClient();
