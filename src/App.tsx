@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from './lib/auth-store';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -8,16 +8,19 @@ import AgentList from './pages/AgentList';
 import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
 import Connectors from './pages/Connectors';
-import { LogOut, Plug } from 'lucide-react';
+import { LogOut, Plug, Home } from 'lucide-react';
 
 function App() {
   const { user, signOut } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/login');
   };
+
+  const showHomeButton = user && location.pathname !== '/' && !location.pathname.startsWith('/login') && !location.pathname.startsWith('/signup');
 
   return (
     <div
@@ -42,27 +45,52 @@ function App() {
           }}
         >
           <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-            <div>
-              <div
-                className="text-xs mb-1"
-                style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  color: '#666666',
-                  letterSpacing: '0.1em',
-                }}
-              >
-                SYS://STUDIO
+            <div className="flex items-center gap-4">
+              <div>
+                <div
+                  className="text-xs mb-1"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    color: '#666666',
+                    letterSpacing: '0.1em',
+                  }}
+                >
+                  SYS://STUDIO
+                </div>
+                <h1
+                  className="text-xl font-bold"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    color: '#FFFFFF',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  CLAUDE AGENT <span style={{ color: '#FF6B35' }}>STUDIO</span>
+                </h1>
               </div>
-              <h1
-                className="text-xl font-bold"
-                style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  color: '#FFFFFF',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                CLAUDE AGENT <span style={{ color: '#FF6B35' }}>STUDIO</span>
-              </h1>
+              {showHomeButton && (
+                <Link
+                  to="/"
+                  className="flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    border: '1px solid #333333',
+                    color: '#CCCCCC',
+                    letterSpacing: '0.05em',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#FF6B35';
+                    e.currentTarget.style.color = '#FF6B35';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#333333';
+                    e.currentTarget.style.color = '#CCCCCC';
+                  }}
+                >
+                  <Home className="w-4 h-4" />
+                  HOME
+                </Link>
+              )}
             </div>
             <div className="flex items-center gap-6">
               <Link

@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Routes, Route, Navigate, useNavigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from './lib/auth-store';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -9,14 +9,16 @@ import AgentList from './pages/AgentList';
 import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
 import Connectors from './pages/Connectors';
-import { LogOut, Plug } from 'lucide-react';
+import { LogOut, Plug, Home } from 'lucide-react';
 function App() {
     const { user, signOut } = useAuthStore();
     const navigate = useNavigate();
+    const location = useLocation();
     const handleSignOut = async () => {
         await signOut();
         navigate('/login');
     };
+    const showHomeButton = user && location.pathname !== '/' && !location.pathname.startsWith('/login') && !location.pathname.startsWith('/signup');
     return (_jsxs("div", { className: "min-h-screen", style: {
             backgroundColor: '#0A0A0A',
             backgroundImage: user
@@ -30,15 +32,26 @@ function App() {
         }, children: [user && (_jsx("header", { style: {
                     borderBottom: '1px solid #333333',
                     backgroundColor: '#0A0A0A',
-                }, children: _jsxs("div", { className: "container mx-auto px-6 py-4 flex items-center justify-between", children: [_jsxs("div", { children: [_jsx("div", { className: "text-xs mb-1", style: {
+                }, children: _jsxs("div", { className: "container mx-auto px-6 py-4 flex items-center justify-between", children: [_jsxs("div", { className: "flex items-center gap-4", children: [_jsxs("div", { children: [_jsx("div", { className: "text-xs mb-1", style: {
+                                                fontFamily: "'IBM Plex Mono', monospace",
+                                                color: '#666666',
+                                                letterSpacing: '0.1em',
+                                            }, children: "SYS://STUDIO" }), _jsxs("h1", { className: "text-xl font-bold", style: {
+                                                fontFamily: "'IBM Plex Mono', monospace",
+                                                color: '#FFFFFF',
+                                                letterSpacing: '-0.01em',
+                                            }, children: ["CLAUDE AGENT ", _jsx("span", { style: { color: '#FF6B35' }, children: "STUDIO" })] })] }), showHomeButton && (_jsxs(Link, { to: "/", className: "flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150", style: {
                                         fontFamily: "'IBM Plex Mono', monospace",
-                                        color: '#666666',
-                                        letterSpacing: '0.1em',
-                                    }, children: "SYS://STUDIO" }), _jsxs("h1", { className: "text-xl font-bold", style: {
-                                        fontFamily: "'IBM Plex Mono', monospace",
-                                        color: '#FFFFFF',
-                                        letterSpacing: '-0.01em',
-                                    }, children: ["CLAUDE AGENT ", _jsx("span", { style: { color: '#FF6B35' }, children: "STUDIO" })] })] }), _jsxs("div", { className: "flex items-center gap-6", children: [_jsxs(Link, { to: "/connectors", className: "flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150", style: {
+                                        border: '1px solid #333333',
+                                        color: '#CCCCCC',
+                                        letterSpacing: '0.05em',
+                                    }, onMouseEnter: (e) => {
+                                        e.currentTarget.style.borderColor = '#FF6B35';
+                                        e.currentTarget.style.color = '#FF6B35';
+                                    }, onMouseLeave: (e) => {
+                                        e.currentTarget.style.borderColor = '#333333';
+                                        e.currentTarget.style.color = '#CCCCCC';
+                                    }, children: [_jsx(Home, { className: "w-4 h-4" }), "HOME"] }))] }), _jsxs("div", { className: "flex items-center gap-6", children: [_jsxs(Link, { to: "/connectors", className: "flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150", style: {
                                         fontFamily: "'IBM Plex Mono', monospace",
                                         border: '1px solid #333333',
                                         color: '#CCCCCC',
