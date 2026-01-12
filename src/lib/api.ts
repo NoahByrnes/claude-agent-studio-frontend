@@ -170,6 +170,26 @@ class ApiClient {
       method: 'DELETE',
     });
   }
+
+  // CLI Feed
+  async getCliFeed(limit?: number): Promise<{
+    messages: Array<{
+      timestamp: string;
+      source: 'conductor' | 'worker';
+      sourceId: string;
+      content: string;
+      type: 'input' | 'output' | 'system';
+    }>;
+    count: number;
+    totalBuffered: number;
+  }> {
+    return this.fetch(`/monitoring/cli-feed${limit ? `?limit=${limit}` : ''}`);
+  }
+
+  connectToCliFeed(): WebSocket {
+    const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/cli-feed/stream`;
+    return new WebSocket(wsUrl);
+  }
 }
 
 export const api = new ApiClient();

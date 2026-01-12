@@ -123,5 +123,13 @@ class ApiClient {
             method: 'DELETE',
         });
     }
+    // CLI Feed
+    async getCliFeed(limit) {
+        return this.fetch(`/monitoring/cli-feed${limit ? `?limit=${limit}` : ''}`);
+    }
+    connectToCliFeed() {
+        const wsUrl = `${API_BASE.replace('http', 'ws')}/monitoring/cli-feed/stream`;
+        return new WebSocket(wsUrl);
+    }
 }
 export const api = new ApiClient();

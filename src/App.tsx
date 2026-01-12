@@ -8,7 +8,8 @@ import AgentList from './pages/AgentList';
 import AgentNew from './pages/AgentNew';
 import AgentDetail from './pages/AgentDetail';
 import Connectors from './pages/Connectors';
-import { LogOut, Plug, Home } from 'lucide-react';
+import CLIFeed from './pages/CLIFeed';
+import { LogOut, Plug, Home, Terminal } from 'lucide-react';
 
 function App() {
   const { user, signOut } = useAuthStore();
@@ -93,6 +94,27 @@ function App() {
               )}
             </div>
             <div className="flex items-center gap-6">
+              <Link
+                to="/cli-feed"
+                className="flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150"
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  border: '1px solid #333333',
+                  color: '#CCCCCC',
+                  letterSpacing: '0.05em',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#FF6B35';
+                  e.currentTarget.style.color = '#FF6B35';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#333333';
+                  e.currentTarget.style.color = '#CCCCCC';
+                }}
+              >
+                <Terminal className="w-4 h-4" />
+                CLI FEED
+              </Link>
               <Link
                 to="/connectors"
                 className="flex items-center gap-2 px-3 py-2 text-xs font-medium transition-all duration-150"
@@ -189,6 +211,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Connectors />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cli-feed"
+            element={
+              <ProtectedRoute>
+                <CLIFeed />
               </ProtectedRoute>
             }
           />
